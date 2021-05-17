@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 // nie musimy dawać adnotacji @Repository bo dziedziczymy po MongoRepository które jest już Repository
-@Repository
+//@Repository
 public interface CourseRepository extends MongoRepository<Course, String> {
 
 

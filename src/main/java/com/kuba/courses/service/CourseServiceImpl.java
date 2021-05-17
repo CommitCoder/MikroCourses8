@@ -4,6 +4,7 @@ import com.kuba.courses.exception.CourseError;
 import com.kuba.courses.exception.CourseException;
 import com.kuba.courses.model.Course;
 import com.kuba.courses.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -12,7 +13,12 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    @Autowired
+    public CourseServiceImpl(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     @Override
     public List<Course> getCourses() {
@@ -21,7 +27,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourse(String code) {
-        return courseRepository.findById(code).orElseThrow(()-> new CourseException(CourseError.COURSE_NOT_FOUND));
+        return courseRepository.findById(code)
+                .orElseThrow(()-> new CourseException(CourseError.COURSE_NOT_FOUND));
     }
 
     @Override
@@ -31,7 +38,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(String code) {
-        Course course = courseRepository.findById(code).orElseThrow(() -> new CourseException(CourseError.COURSE_NOT_FOUND));
+        Course course = courseRepository.findById(code)
+                .orElseThrow(() -> new CourseException(CourseError.COURSE_NOT_FOUND));
         courseRepository.delete(course);
     }
 

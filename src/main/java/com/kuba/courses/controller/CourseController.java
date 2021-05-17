@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("courses")
+@RequestMapping("/courses")
 public class CourseController {
 
     private final CourseService courseService;
@@ -32,7 +33,7 @@ public class CourseController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Course addCourse(@RequestBody Course course){
+    public Course addCourse(@Valid @RequestBody Course course){
         return courseService.addCourse(course);
     }
 
